@@ -10,7 +10,6 @@ import xlwt
 import csv
 import os
 import os.path as op
-from operator import itemgetter
 from collections import defaultdict
 
 
@@ -78,7 +77,7 @@ def create_excel_file(sheet_names, output):
     """
     book = xlwt.Workbook()
 
-    for f, sheet_name in sorted(sheet_names.iteritems(), key=itemgetter(1)):
+    for f, sheet_name in sorted(sheet_names.iteritems(), key=lambda n: n[1].lower()):
         print "Processing {0:>30} -> {1}/{2}".format(f, output, sheet_name)
         with open(f) as fl:
             sheet = book.add_sheet(sheet_name)
