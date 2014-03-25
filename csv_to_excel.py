@@ -18,13 +18,15 @@ def sanitize(name):
     """xlwt does not allow long sheet names.
     """
     for c in '/', '?':
+        # For '/', we do not print
         if c in name and c != '/':
             print "Sheet names cannot contain '{0}', replacing in {1}".format(c, name)
         name = name.replace(c, '_')
 
-    limit = 30
+    limit = 28
     if len(name) > limit:
-        print "Sheet names are limited to {0} characters! Trimming {1}".format(limit, name)
+        print "Sheet names are limited to {0} characters!".format(limit)
+        print "Trimming {0} to {1}".format(name, name[:limit])
     return name[:limit]
 
 
@@ -77,9 +79,9 @@ def create_excel_file(sheet_names, output):
     book = xlwt.Workbook()
 
     for f, sheet_name in sorted(sheet_names.iteritems(), key=itemgetter(1)):
-        sheet = book.add_sheet(sheet_name)
         print "Processing {0:>30} -> {1}/{2}".format(f, output, sheet_name)
         with open(f) as fl:
+            sheet = book.add_sheet(sheet_name)
             add_to_sheet(sheet, fl)
 
     book.save(output)
