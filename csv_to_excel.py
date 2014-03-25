@@ -24,8 +24,7 @@ def sanitize(name):
 
     limit = 28
     if len(name) > limit:
-        print "Sheet names are limited to {0} characters!".format(limit)
-        print "Trimming {0} to {1}".format(name, name[:limit])
+        print "Name too long! Trimming {0} to {1}".format(name, name[:limit])
     return name[:limit]
 
 
