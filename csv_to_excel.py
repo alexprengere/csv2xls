@@ -62,13 +62,36 @@ def build_sheet_names(files, keep_prefix):
     return sheet_names
 
 
+def try_cast_num(n):
+    """Type inference when writing in Excel.
+    """
+    try:
+        int(n)
+    except ValueError:
+        pass
+    else:
+        return int(n)
+
+    try:
+        float(n)
+    except ValueError:
+        pass
+    else:
+        return float(n)
+
+    return n
+
+
+
 def add_to_sheet(sheet, fl):
     """Add filelike content to sheet.
     """
     for num, line in enumerate(csv.reader(fl, delimiter=',', quotechar='"')):
         row = sheet.row(num)
         for index, elem in enumerate(line):
-            row.write(index, elem)
+            # Here try_cast_num tries to cast to int/float
+            # If it fails, it returns the original string
+            row.write(index, try_cast_num(elem))
 
 
 def create_excel_file(sheet_names, output):
