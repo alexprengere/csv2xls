@@ -11,6 +11,7 @@ import csv
 import os
 import os.path as op
 from operator import itemgetter
+from collections import defaultdict
 
 
 def sanitize(name):
@@ -45,6 +46,18 @@ def build_sheet_names(files, keep_prefix):
     sheet_names = {}
     for f in files:
         sheet_names[f] = sanitize(trim_extens(trim_prefix(f)))
+
+    # Handling duplicates
+    count_sheet_names = defaultdict(list)
+    for f, sheet_name in sheet_names.iteritems():
+        count_sheet_names[sheet_name].append(f)
+
+    for sheet_name, list_files in count_sheet_names.iteritems():
+        if len(list_files) > 1:
+            # Duplicates here
+            for i, f in enumerate(list_files, start=1):
+                sheet_names[f] = '{0}_{1}'.format(sheet_name, i)
+                print "To avoid duplicated sheet names, renaming {0} to {1}".format(sheet_name, sheet_names[f])
 
     return sheet_names
 
