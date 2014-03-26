@@ -27,14 +27,23 @@ automatically installed with setuptools. Otherwise:
 
  $ pip install --user xlwt
 
+Example
+-------
+
+.. code-block:: bash
+
+ $ csv2xls examples/sheet_alpha.csv examples/sheet_beta.csv -o output.xls
+ Processing       examples/sheet_alpha.csv -> output.xls/alpha
+ Processing        examples/sheet_beta.csv -> output.xls/beta
+
 Usage
 -----
 
 .. code-block:: bash
 
- $ ./csv_to_xls.py -h
- usage: csv_to_xls.py [-h] [-o OUTPUT] [-k] [-f] [-c] [-d DATE_FORMAT]
-                      files [files ...]
+ $ csv2xls -h
+ usage: csv2xls [-h] [-o OUTPUT] [-k] [-f] [-c] [-d DATE_FORMAT]
+                files [files ...]
 
  Put together some CSV files into a single Excel file. Basic types are infered
  automatically.
@@ -55,14 +64,5 @@ Usage
                          Change date format used during date type inference.
                          Default is %Y-%m-%d.
 
- Example: ./csv_to_xls.py examples/sheet_alpha.csv examples/sheet_beta.csv
-
-Example
--------
-
-.. code-block:: bash
-
- $ ./csv_to_xls.py examples/sheet_alpha.csv examples/sheet_beta.csv
- Processing       examples/sheet_alpha.csv -> output.xls/alpha
- Processing        examples/sheet_beta.csv -> output.xls/beta
+ Example: csv2xls examples/sheet_alpha.csv examples/sheet_beta.csv
 
