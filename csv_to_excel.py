@@ -22,12 +22,12 @@ def sanitize(name):
     for c in '/', '?':
         # For '/', we do not print
         if c in name and c != '/':
-            print "Sheet names cannot contain '{0}', replacing in {1}".format(c, name)
+            print "! Sheet names cannot contain '{0}', replacing in {1}".format(c, name)
         name = name.replace(c, '_')
 
     limit = 28
     if len(name) > limit:
-        print "Name too long! Trimming {0} to {1}".format(name, name[:limit])
+        print "! Sheet name too long. Trimming {0} to {1}".format(name, name[:limit])
     return name[:limit]
 
 
@@ -148,12 +148,12 @@ def main(args):
     """Main.
     """
     if not args.output.endswith(".xls") and not args.output.endswith(".xlsx"):
-        print "Output name should end with .xls[x] extension, got:"
+        print "! Output name should end with .xls[x] extension, got:"
         print "{0:^40}".format(args.output)
         exit(1)
 
     if op.exists(args.output) and not args.force:
-        print "Output already exists: {0}".format(args.output)
+        print "! Output already exists: {0}".format(args.output)
         exit(1)
 
     create_excel_file(build_sheet_names(args.files, args.keep_prefix),
