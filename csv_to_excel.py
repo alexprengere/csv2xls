@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Put together some CSV files into a single Excel file.
+Put together some CSV files into a single Excel file, in different sheets.
 """
 
 from __future__ import with_statement
