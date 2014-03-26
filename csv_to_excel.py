@@ -1,17 +1,18 @@
 #!/usr/bin/env python
 
 """
-Join several CSV files into one single Excel WorkBook.
+Put together some CSV files into a single Excel file.
 """
 
 from __future__ import with_statement
 
-import xlwt
-import csv
-import os
+import os, sys
 import os.path as op
 from datetime import datetime
 from collections import defaultdict
+import csv
+
+import xlwt
 
 DEF_DATE_FORMAT = "%Y-%m-%d"
 
@@ -172,13 +173,16 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="""
-    Join together some CSV files into a single Excel file.
+    Put together some CSV files into a single Excel file.
+    Basic types are infered automatically.
     """)
 
     parser.add_argument("files", nargs='+')
 
     parser.add_argument("-o", "--output",
-        help="Define output name.",
+        help="""
+        Define name for output Excel file.
+        Default is %(default)s.""",
         default="output.xls")
 
     parser.add_argument("-k", "--keep-prefix",
@@ -190,22 +194,26 @@ if __name__ == "__main__":
 
     parser.add_argument("-f", "--force",
         help="""
-        If output exists, override it.
+        If output already exists, override it.
         """,
         action='store_true')
 
     parser.add_argument("-c", "--clean",
         help="""
-        Remove input files afterwards.
+        Delete input files after successfully creating the Excel file.
         """,
         action='store_true')
 
     parser.add_argument("-d", "--date-format",
         help="""
-        Change date format used for date type
-        inference. Default is {0}.
-        """.format(DEF_DATE_FORMAT),
+        Change date format used during date type
+        inference. Default is %(default)s.
+        """,
         default=DEF_DATE_FORMAT)
+
+    parser.epilog = """
+    Example: ./{} examples/sheet_alpha.csv examples/sheet_beta.csv
+    """.format(op.basename(sys.argv[0]))
 
     args = parser.parse_args()
 
