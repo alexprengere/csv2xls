@@ -98,6 +98,9 @@ def is_date(s, date_format):
     else:
         return True
 
+# XFS style for date format
+DATE_FORMAT_STYLE = xlwt.XFStyle()
+DATE_FORMAT_STYLE.num_format_str = 'M/D/YY'
 
 def write_to_sheet(sheet, row_nb, col_nb, v, date_format):
     """Custom sheet writer with type inference.
@@ -109,12 +112,9 @@ def write_to_sheet(sheet, row_nb, col_nb, v, date_format):
         sheet.write(row_nb, col_nb, float(v))
 
     elif is_date(v, date_format):
-        # XFS style for date format
-        date_format_style = xlwt.XFStyle()
-        date_format_style.num_format_str = 'M/D/YY'
         sheet.write(row_nb, col_nb,
                     datetime.strptime(v, date_format),
-                    date_format_style)
+                    DATE_FORMAT_STYLE)
     else:
         sheet.write(row_nb, col_nb, v)
 
