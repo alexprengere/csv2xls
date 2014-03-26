@@ -208,7 +208,7 @@ def main():
         default=DEF_DATE_FORMAT)
 
     parser.epilog = """
-    Example: ./{0} examples/sheet_alpha.csv examples/sheet_beta.csv
+    Example: {0} examples/sheet_alpha.csv examples/sheet_beta.csv
     """.format(op.basename(sys.argv[0]))
 
     args = parser.parse_args()
