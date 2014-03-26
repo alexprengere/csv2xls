@@ -3,9 +3,16 @@ csv2xls
 
 Put together some CSV files into a single Excel file, in different sheets.
 
-Prerequisites
--------------
-This is needed:
+Installation
+------------
+```bash
+$ python setup.py install --user
+```
+
+Dependency
+----------
+Outside the standard library, the *xlwt* package is needed, and should be
+automatically installed with setuptools. Otherwise:
 ```bash
 pip install --user xlwt
 ```
