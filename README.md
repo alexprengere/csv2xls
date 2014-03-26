@@ -1,5 +1,5 @@
-CSV2Excel
-=========
+csv2xls
+=======
 
 Put together some CSV files into a single Excel file, in different sheets.
 
@@ -13,9 +13,9 @@ pip install --user xlwt
 Usage
 -----
 ```bash
-$ ./csv_to_excel.py -h
-usage: csv_to_excel.py [-h] [-o OUTPUT] [-k] [-f] [-c] [-d DATE_FORMAT]
-                       files [files ...]
+$ ./csv_to_xls.py -h
+usage: csv_to_xls.py [-h] [-o OUTPUT] [-k] [-f] [-c] [-d DATE_FORMAT]
+                     files [files ...]
 
 Put together some CSV files into a single Excel file. Basic types are infered
 automatically.
@@ -36,13 +36,13 @@ optional arguments:
                         Change date format used during date type inference.
                         Default is %Y-%m-%d.
 
-Example: ./csv_to_excel.py examples/sheet_alpha.csv examples/sheet_beta.csv
+Example: ./csv_to_xls.py examples/sheet_alpha.csv examples/sheet_beta.csv
 ```
 
 Example
 -------
 ```bash
-$ ./csv_to_excel.py examples/sheet_alpha.csv examples/sheet_beta.csv
+$ ./csv_to_xls.py examples/sheet_alpha.csv examples/sheet_beta.csv
 Processing       examples/sheet_alpha.csv -> output.xls/alpha
 Processing        examples/sheet_beta.csv -> output.xls/beta
 ```
