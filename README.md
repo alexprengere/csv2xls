@@ -12,7 +12,7 @@ pip install --user xlwt
 
 Usage
 -----
-```shell
+```bash
 $ ./csv_to_excel.py -h
 usage: csv_to_excel.py [-h] [-o OUTPUT] [-k] [-f] [-c] [-d DATE_FORMAT]
                        files [files ...]
@@ -41,7 +41,7 @@ Example: ./csv_to_excel.py examples/sheet_alpha.csv examples/sheet_beta.csv
 
 Example
 -------
-```shell
+```bash
 $ ./csv_to_excel.py examples/sheet_alpha.csv examples/sheet_beta.csv
 Processing       examples/sheet_alpha.csv -> output.xls/alpha
 Processing        examples/sheet_beta.csv -> output.xls/beta
