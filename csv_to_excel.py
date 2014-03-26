@@ -98,36 +98,35 @@ def is_date(s, date_format):
         return True
 
 
-def write_to_row(row, index, v, date_format):
-    """Custom row writer with type inference.
+def write_to_sheet(sheet, row_nb, col_nb, v, date_format):
+    """Custom sheet writer with type inference.
     """
     if is_int(v):
-        row.write(index, int(v))
+        sheet.write(row_nb, col_nb, int(v))
 
     elif is_float(v):
-        row.write(index, float(v))
+        sheet.write(row_nb, col_nb, float(v))
 
     elif is_date(v, date_format):
         # XFS style for date format
         date_format_style = xlwt.XFStyle()
         date_format_style.num_format_str = 'M/D/YY'
-        row.write(index,
-                  datetime.strptime(v, date_format),
-                  date_format_style)
+        sheet.write(row_nb, col_nb,
+                    datetime.strptime(v, date_format),
+                    date_format_style)
     else:
-        row.write(index, v)
+        sheet.write(row_nb, col_nb, v)
 
 
 
 def add_to_sheet(sheet, fl, date_format):
     """Add filelike content to sheet.
     """
-    for num, line in enumerate(csv.reader(fl, delimiter=',', quotechar='"')):
-        row = sheet.row(num)
+    for row_nb, row in enumerate(csv.reader(fl, delimiter=',', quotechar='"')):
 
-        for index, v in enumerate(line):
+        for col_nb, v in enumerate(row):
             # Type inference hidden here
-            write_to_row(row, index, v, date_format)
+            write_to_sheet(sheet, row_nb, col_nb, v, date_format)
 
 
 def create_excel_file(sheet_names, output, date_format):
