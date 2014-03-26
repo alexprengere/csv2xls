@@ -98,6 +98,7 @@ def is_date(s, date_format):
     else:
         return True
 
+
 # XFS style for date format
 DATE_FORMAT_STYLE = xlwt.XFStyle()
 DATE_FORMAT_STYLE.num_format_str = 'M/D/YY'
@@ -119,7 +120,6 @@ def write_to_sheet(sheet, row_nb, col_nb, v, date_format):
         sheet.write(row_nb, col_nb, v)
 
 
-
 def add_to_sheet(sheet, fl, date_format):
     """Add filelike content to sheet.
     """
@@ -130,46 +130,42 @@ def add_to_sheet(sheet, fl, date_format):
             write_to_sheet(sheet, row_nb, col_nb, v, date_format)
 
 
-def create_excel_file(sheet_names, output, date_format):
+def create_excel_file(files, output, keep_prefix, force, date_format, clean):
     """Main function creating the excel file.
     """
+    if not output.endswith(".xls") and not output.endswith(".xlsx"):
+        print("! Output name should end with .xls[x] extension, got:")
+        print("{0:^40}".format(output))
+        return
+
+    if op.exists(output) and not force:
+        print("! Output already exists: {0}".format(output))
+        return
+
+    # THE Excel book ;)
     book = xlwt.Workbook()
 
-    for f, sheet_name in sorted(sheet_names.items(), key=lambda t: t[1].lower()):
+    for f, sheet_name in sorted(build_sheet_names(files, keep_prefix).items(),
+                                key=lambda t: t[1].lower()):
+
         print("Processing {0:>30} -> {1}/{2}".format(f, output, sheet_name))
+
         with open(f) as fl:
             sheet = book.add_sheet(sheet_name)
             add_to_sheet(sheet, fl, date_format)
 
     book.save(output)
 
-
-def main(args):
-    """Main.
-    """
-    if not args.output.endswith(".xls") and not args.output.endswith(".xlsx"):
-        print("! Output name should end with .xls[x] extension, got:")
-        print("{0:^40}".format(args.output))
-        exit(1)
-
-    if op.exists(args.output) and not args.force:
-        print("! Output already exists: {0}".format(args.output))
-        exit(1)
-
-    create_excel_file(build_sheet_names(args.files, args.keep_prefix),
-                      args.output,
-                      args.date_format)
-
     # Hopefully no exception raised so far
-    if args.clean:
-        for f in sorted(args.files):
+    if clean:
+        for f in sorted(files):
             print("Removing {0}".format(f))
             os.unlink(f)
 
 
-
-if __name__ == "__main__":
-
+def main():
+    """Main.
+    """
     import argparse
 
     parser = argparse.ArgumentParser(description="""
@@ -217,5 +213,15 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    main(args)
+    create_excel_file(args.files,
+                      args.output,
+                      args.keep_prefix,
+                      args.force,
+                      args.date_format,
+                      args.clean)
+
+
+if __name__ == "__main__":
+
+    main()
 
