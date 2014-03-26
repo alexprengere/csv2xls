@@ -23,12 +23,12 @@ def sanitize(name):
     for c in '/', '?':
         # For '/', we do not print
         if c in name and c != '/':
-            print "! Sheet names cannot contain '{0}', replacing in {1}".format(c, name)
+            print("! Sheet names cannot contain '{0}', replacing in {1}".format(c, name))
         name = name.replace(c, '_')
 
     limit = 28
     if len(name) > limit:
-        print "! Sheet name too long. Trimming {0} to {1}".format(name, name[:limit])
+        print("! Sheet name too long. Trimming {0} to {1}".format(name, name[:limit]))
     return name[:limit]
 
 
@@ -53,15 +53,15 @@ def build_sheet_names(files, keep_prefix):
 
     # Handling duplicates
     count_sheet_names = defaultdict(list)
-    for f, sheet_name in sheet_names.iteritems():
+    for f, sheet_name in sheet_names.items():
         count_sheet_names[sheet_name].append(f)
 
-    for sheet_name, list_files in count_sheet_names.iteritems():
+    for sheet_name, list_files in count_sheet_names.items():
         if len(list_files) > 1:
             # Duplicates here
             for i, f in enumerate(list_files, start=1):
                 sheet_names[f] = '{0}_{1}'.format(sheet_name, i)
-                print "! To avoid duplicated sheet names, renaming {0} to {1}".format(sheet_name, sheet_names[f])
+                print("! To avoid duplicated sheet names, renaming {0} to {1}".format(sheet_name, sheet_names[f]))
 
     return sheet_names
 
@@ -135,8 +135,8 @@ def create_excel_file(sheet_names, output, date_format):
     """
     book = xlwt.Workbook()
 
-    for f, sheet_name in sorted(sheet_names.iteritems(), key=lambda (_, v): v.lower()):
-        print "Processing {0:>30} -> {1}/{2}".format(f, output, sheet_name)
+    for f, sheet_name in sorted(sheet_names.items(), key=lambda t: t[1].lower()):
+        print("Processing {0:>30} -> {1}/{2}".format(f, output, sheet_name))
         with open(f) as fl:
             sheet = book.add_sheet(sheet_name)
             add_to_sheet(sheet, fl, date_format)
@@ -148,12 +148,12 @@ def main(args):
     """Main.
     """
     if not args.output.endswith(".xls") and not args.output.endswith(".xlsx"):
-        print "! Output name should end with .xls[x] extension, got:"
-        print "{0:^40}".format(args.output)
+        print("! Output name should end with .xls[x] extension, got:")
+        print("{0:^40}".format(args.output))
         exit(1)
 
     if op.exists(args.output) and not args.force:
-        print "! Output already exists: {0}".format(args.output)
+        print("! Output already exists: {0}".format(args.output))
         exit(1)
 
     create_excel_file(build_sheet_names(args.files, args.keep_prefix),
@@ -163,7 +163,7 @@ def main(args):
     # Hopefully no exception raised so far
     if args.clean:
         for f in sorted(args.files):
-            print "Removing {0}".format(f)
+            print("Removing {0}".format(f))
             os.unlink(f)
 
 
@@ -212,7 +212,7 @@ if __name__ == "__main__":
         default=DEF_DATE_FORMAT)
 
     parser.epilog = """
-    Example: ./{} examples/sheet_alpha.csv examples/sheet_beta.csv
+    Example: ./{0} examples/sheet_alpha.csv examples/sheet_beta.csv
     """.format(op.basename(sys.argv[0]))
 
     args = parser.parse_args()
