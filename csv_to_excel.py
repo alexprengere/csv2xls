@@ -10,7 +10,10 @@ import xlwt
 import csv
 import os
 import os.path as op
+from datetime import datetime
 from collections import defaultdict
+
+DEF_DATE_FORMAT = "%Y-%m-%d"
 
 
 def sanitize(name):
@@ -57,53 +60,86 @@ def build_sheet_names(files, keep_prefix):
             # Duplicates here
             for i, f in enumerate(list_files, start=1):
                 sheet_names[f] = '{0}_{1}'.format(sheet_name, i)
-                print "To avoid duplicated sheet names, renaming {0} to {1}".format(sheet_name, sheet_names[f])
+                print "! To avoid duplicated sheet names, renaming {0} to {1}".format(sheet_name, sheet_names[f])
 
     return sheet_names
 
 
-def try_cast_num(n):
+def is_int(s):
     """Type inference when writing in Excel.
     """
     try:
-        int(n)
+        int(s)
     except ValueError:
-        pass
+        return False
     else:
-        return int(n)
+        return True
 
+
+def is_float(s):
+    """Type inference when writing in Excel.
+    """
     try:
-        float(n)
+        float(s)
     except ValueError:
-        pass
+        return False
     else:
-        return float(n)
-
-    return n
+        return True
 
 
+def is_date(s, date_format):
+    """Type inference when writing in Excel.
+    """
+    try:
+        datetime.strptime(s, date_format)
+    except ValueError:
+        return False
+    else:
+        return True
 
-def add_to_sheet(sheet, fl):
+
+def write_to_row(row, index, v, date_format):
+    """Custom row writer with type inference.
+    """
+    if is_int(v):
+        row.write(index, int(v))
+
+    elif is_float(v):
+        row.write(index, float(v))
+
+    elif is_date(v, date_format):
+        # XFS style for date format
+        date_format_style = xlwt.XFStyle()
+        date_format_style.num_format_str = 'M/D/YY'
+        row.write(index,
+                  datetime.strptime(v, date_format),
+                  date_format_style)
+    else:
+        row.write(index, v)
+
+
+
+def add_to_sheet(sheet, fl, date_format):
     """Add filelike content to sheet.
     """
     for num, line in enumerate(csv.reader(fl, delimiter=',', quotechar='"')):
         row = sheet.row(num)
-        for index, elem in enumerate(line):
-            # Here try_cast_num tries to cast to int/float
-            # If it fails, it returns the original string
-            row.write(index, try_cast_num(elem))
+
+        for index, v in enumerate(line):
+            # Type inference hidden here
+            write_to_row(row, index, v, date_format)
 
 
-def create_excel_file(sheet_names, output):
+def create_excel_file(sheet_names, output, date_format):
     """Main function creating the excel file.
     """
     book = xlwt.Workbook()
 
-    for f, sheet_name in sorted(sheet_names.iteritems(), key=lambda n: n[1].lower()):
+    for f, sheet_name in sorted(sheet_names.iteritems(), key=lambda (_, v): v.lower()):
         print "Processing {0:>30} -> {1}/{2}".format(f, output, sheet_name)
         with open(f) as fl:
             sheet = book.add_sheet(sheet_name)
-            add_to_sheet(sheet, fl)
+            add_to_sheet(sheet, fl, date_format)
 
     book.save(output)
 
@@ -121,7 +157,8 @@ def main(args):
         exit(1)
 
     create_excel_file(build_sheet_names(args.files, args.keep_prefix),
-                      args.output)
+                      args.output,
+                      args.date_format)
 
     # Hopefully no exception raised so far
     if args.clean:
@@ -163,6 +200,13 @@ if __name__ == "__main__":
         Remove input files afterwards.
         """,
         action='store_true')
+
+    parser.add_argument("-d", "--date-format",
+        help="""
+        Change date format used for date type
+        inference. Default is {0}.
+        """.format(DEF_DATE_FORMAT),
+        default=DEF_DATE_FORMAT)
 
     args = parser.parse_args()
 
