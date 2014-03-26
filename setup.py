@@ -25,7 +25,7 @@ setup(
     author = 'Alex Prengère',
     author_email = 'alexprengere@gmail.com',
     url = 'https://github.com/alexprengere/csv2xls',
-    description = 'Data services and visualization',
+    description = 'Put together some CSV files into a single Excel file, in different sheets.',
     long_description = LONG_DESCRIPTION,
     license = LICENSE,
     #
