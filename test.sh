@@ -3,7 +3,10 @@
 DIRNAME=`dirname $0`
 cd "$DIRNAME"
 
-python ./csv_to_xls.py examples/sheet_*.csv -o examples/output.xls -f
+cd examples
+rm -f output_ref.csv output.csv output.xls
+
+python ../csv_to_xls.py sheet_*.csv -o output.xls
 
 has_xls2txt=$(which xls2txt 2> /dev/null)
 
@@ -11,20 +14,13 @@ if [ -z "$has_xls2txt" ]; then
     echo "! Please install xls2txt to view a full diff."
     echo "! Simple diff will be used on binaries as fallback."
 
-    echo "Diff:"
-    diff examples/output_ref.xls examples/output.xls
+    diff output_ref.xls output.xls
 else
-    rm -f examples/ref_output.csv
-    rm -f examples/output.csv
-    xls2txt -A examples/output_ref.xls > examples/ref_output.csv
-    xls2txt -A examples/output.xls     > examples/output.csv
+    xls2txt -A output_ref.xls > output_ref.csv
+    xls2txt -A output.xls     > output.csv
 
-    echo "Diff:"
-    diff -u examples/ref_output.csv examples/output.csv
-
-    rm -f examples/ref_output.csv
-    rm -f examples/output.csv
+    diff -u output_ref.csv output.csv
 fi
 
-rm -f examples/output.xls
+rm -f output_ref.csv output.csv output.xls
 
