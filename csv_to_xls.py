@@ -130,8 +130,8 @@ def add_to_sheet(sheet, fl, date_format):
             write_to_sheet(sheet, row_nb, col_nb, v, date_format)
 
 
-def create_excel_file(files, output, keep_prefix, force, date_format, clean):
-    """Main function creating the excel file.
+def create_xls_file(files, output, keep_prefix=False, force=False, date_format=DEF_DATE_FORMAT, clean=False):
+    """Main function creating the xls file.
     """
     if not output.endswith(".xls") and not output.endswith(".xlsx"):
         print("! Output name should end with .xls[x] extension, got:")
@@ -213,12 +213,12 @@ def main():
 
     args = parser.parse_args()
 
-    create_excel_file(args.files,
-                      args.output,
-                      args.keep_prefix,
-                      args.force,
-                      args.date_format,
-                      args.clean)
+    create_xls_file(args.files,
+                    args.output,
+                    args.keep_prefix,
+                    args.force,
+                    args.date_format,
+                    args.clean)
 
 
 if __name__ == "__main__":
