@@ -1,6 +1,6 @@
 # Excel
-*.xls
-*.xlsx
+/*.xls
+/*.xlsx
 # Vim
 *sw[po]
 #
