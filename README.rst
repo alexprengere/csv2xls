@@ -66,3 +66,20 @@ Usage
 
  Example: csv2xls examples/sheet_alpha.csv examples/sheet_beta.csv
 
+Tests
+-----
+To run the tests, you must install this tool:
+
+.. code-block:: bash
+
+ $ git clone https://github.com/hroptatyr/xls2txt.git
+ $ cd xls2txt
+ $ make
+ $ sudo make install
+
+Then run:
+
+.. code-block:: bash
+
+ $ ./tests.sh
+
