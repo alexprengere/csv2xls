@@ -31,46 +31,43 @@
           <h1>
 <a name="csv2xls" class="anchor" href="#csv2xls"><span class="octicon octicon-link"></span></a>csv2xls</h1>
 
-<p>Put together some CSV files into a single Excel file, in different
-sheets.</p>
+<p>Put together some CSV files into a single Excel file, in different sheets.</p>
 
 <h2>
 <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
 <p>You can install directly after cloning:</p>
 
-<pre lang="sourceCode"><code>$ python setup.py install --user
-</code></pre>
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>python setup.py install --user
+</pre></div>
 
 <p>Or use the Python package:</p>
 
-<pre lang="sourceCode"><code>$ pip install --user csv2xls
-</code></pre>
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>pip install --user csv2xls
+</pre></div>
 
 <h2>
 <a name="dependency" class="anchor" href="#dependency"><span class="octicon octicon-link"></span></a>Dependency</h2>
 
-<p>Outside the standard library, the <a href="http://www.python-excel.org/">xlwt</a>
-package is needed, and should be automatically installed with
-setuptools. Otherwise:</p>
+<p>Outside the standard library, the <a href="http://www.python-excel.org/">xlwt</a> package is needed, and should be automatically installed with setuptools. Otherwise:</p>
 
-<pre lang="sourceCode"><code>$ pip install --user xlwt
-</code></pre>
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>pip install --user xlwt
+</pre></div>
 
 <h2>
 <a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h2>
 
-<pre lang="sourceCode"><code>$ csv2xls examples/sheet_alpha.csv examples/sheet_beta.csv -o output.xls
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>csv2xls examples/sheet_alpha.csv examples/sheet_beta.csv -o output.xls
 Processing       examples/sheet_alpha.csv -&gt; output.xls/alpha
 Processing        examples/sheet_beta.csv -&gt; output.xls/beta
-</code></pre>
+</pre></div>
 
 <h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<pre lang="sourceCode"><code>$ csv2xls -h
-usage: csv2xls [-h] [-o OUTPUT] [-k] [-f] [-c] [-d DATE_FORMAT]
-               files [files ...]
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>csv2xls -h
+usage: csv2xls <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>-o OUTPUT<span class="o">]</span> <span class="o">[</span>-k<span class="o">]</span> <span class="o">[</span>-f<span class="o">]</span> <span class="o">[</span>-c<span class="o">]</span> <span class="o">[</span>-d DATE_FORMAT<span class="o">]</span>
+               files <span class="o">[</span>files ...<span class="o">]</span>
 
 Put together some CSV files into a single Excel file. Basic types are infered
 automatically.
@@ -79,37 +76,36 @@ positional arguments:
   files
 
 optional arguments:
-  -h, --help            show this help message and exit
+  -h, --help            show this <span class="nb">help </span>message and <span class="nb">exit</span>
   -o OUTPUT, --output OUTPUT
-                        Define name for output Excel file. Default is
+                        Define name <span class="k">for </span>output Excel file. Default is
                         output.xls.
   -k, --keep-prefix     Keep common prefix when building sheet names.
   -f, --force           If output already exists, override it.
   -c, --clean           Delete input files after successfully creating the
                         Excel file.
   -d DATE_FORMAT, --date-format DATE_FORMAT
-                        Change date format used during date type inference.
+                        Change date format used during date <span class="nb">type </span>inference.
                         Default is %Y-%m-%d.
 
 Example: csv2xls examples/sheet_alpha.csv examples/sheet_beta.csv
-</code></pre>
+</pre></div>
 
 <h2>
 <a name="tests" class="anchor" href="#tests"><span class="octicon octicon-link"></span></a>Tests</h2>
 
-<p>To run the tests, you must install
-<a href="https://github.com/hroptatyr/xls2txt">xls2txt</a>:</p>
+<p>To run the tests, you must install <a href="https://github.com/hroptatyr/xls2txt">xls2txt</a>:</p>
 
-<pre lang="sourceCode"><code>$ git clone https://github.com/hroptatyr/xls2txt.git
-$ cd xls2txt
-$ make
-$ sudo make install
-</code></pre>
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>git clone https://github.com/hroptatyr/xls2txt.git
+<span class="nv">$ </span><span class="nb">cd </span>xls2txt
+<span class="nv">$ </span>make
+<span class="nv">$ </span>sudo make install
+</pre></div>
 
 <p>Then run:</p>
 
-<pre lang="sourceCode"><code>$ ./tests.sh
-</code></pre>
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>./tests.sh
+</pre></div>
         </section>
 
         <aside id="sidebar">
