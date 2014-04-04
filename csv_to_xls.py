@@ -199,7 +199,7 @@ def main():
 
     parser = argparse.ArgumentParser(description="""
     Put together some CSV files into a single Excel file.
-    Basic types are infered automatically.
+    Basic types are inferred automatically.
     """)
 
     parser.add_argument("files", nargs='+')
@@ -212,21 +212,21 @@ def main():
 
     parser.add_argument("-k", "--keep-prefix",
         help="""
-        Keep common prefix when
-        building sheet names.
+        Keep common prefix when building sheet names.
+        Default is to remove the common prefix of input file names.
         """,
         action='store_true')
 
     parser.add_argument("-c", "--clean",
         help="""
-        Delete input files after successfully creating the Excel file.
+        Delete input files afterwards, if successful.
         """,
         action='store_true')
 
     parser.add_argument("-no", "--no-type-inference",
         help="""
-        Do not try to detect int/float/date when write
-        in the sheet. Will be faster that way.
+        Do not try to infer int/float/date when writing.
+        This mode is faster and preserves input data.
         """,
         action='store_true')
 
@@ -235,7 +235,8 @@ def main():
         Change date format used during date type
         inference. Default is %(default)s.
         """,
-        default=DEF_DATE_FORMAT)
+        default=DEF_DATE_FORMAT,
+        metavar="FORMAT")
 
     parser.epilog = """
     Example: {0} examples/sheet_alpha.csv examples/sheet_beta.csv
