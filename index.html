@@ -31,7 +31,8 @@
           <h1>
 <a name="csv2xls" class="anchor" href="#csv2xls"><span class="octicon octicon-link"></span></a>csv2xls</h1>
 
-<p>Put together some CSV files into a single Excel file, in different sheets.</p>
+<p>Put together some CSV files into a single Excel file, in different
+sheets.</p>
 
 <h2>
 <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
@@ -49,7 +50,9 @@
 <h2>
 <a name="dependency" class="anchor" href="#dependency"><span class="octicon octicon-link"></span></a>Dependency</h2>
 
-<p>Outside the standard library, the <a href="http://www.python-excel.org/">xlwt</a> package is needed, and should be automatically installed with setuptools. Otherwise:</p>
+<p>Outside the standard library, the <a href="http://www.python-excel.org/">xlwt</a>
+package is needed, and should be automatically installed with
+setuptools. Otherwise:</p>
 
 <div class="highlight highlight-bash"><pre><span class="nv">$ </span>pip install --user xlwt
 </pre></div>
@@ -66,10 +69,9 @@ Processing        examples/sheet_beta.csv -&gt; output.xls/beta
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
 <div class="highlight highlight-bash"><pre><span class="nv">$ </span>csv2xls -h
-usage: csv2xls <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>-o OUTPUT<span class="o">]</span> <span class="o">[</span>-k<span class="o">]</span> <span class="o">[</span>-f<span class="o">]</span> <span class="o">[</span>-c<span class="o">]</span> <span class="o">[</span>-d DATE_FORMAT<span class="o">]</span>
-               files <span class="o">[</span>files ...<span class="o">]</span>
+usage: csv2xls <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>-o OUTPUT<span class="o">]</span> <span class="o">[</span>-k<span class="o">]</span> <span class="o">[</span>-c<span class="o">]</span> <span class="o">[</span>-no<span class="o">]</span> <span class="o">[</span>-d FORMAT<span class="o">]</span> files <span class="o">[</span>files ...<span class="o">]</span>
 
-Put together some CSV files into a single Excel file. Basic types are infered
+Put together some CSV files into a single Excel file. Basic types are inferred
 automatically.
 
 positional arguments:
@@ -80,11 +82,13 @@ optional arguments:
   -o OUTPUT, --output OUTPUT
                         Define name <span class="k">for </span>output Excel file. Default is
                         output.xls.
-  -k, --keep-prefix     Keep common prefix when building sheet names.
-  -f, --force           If output already exists, override it.
-  -c, --clean           Delete input files after successfully creating the
-                        Excel file.
-  -d DATE_FORMAT, --date-format DATE_FORMAT
+  -k, --keep-prefix     Keep common prefix when building sheet names. Default
+                        is to remove the common prefix of input file names.
+  -c, --clean           Delete input files afterwards, <span class="k">if </span>successful.
+  -no, --no-type-inference
+                        Do not try to infer int/float/date when writing. This
+                        mode is faster and preserves input data.
+  -d FORMAT, --date-format FORMAT
                         Change date format used during date <span class="nb">type </span>inference.
                         Default is %Y-%m-%d.
 
@@ -94,7 +98,8 @@ Example: csv2xls examples/sheet_alpha.csv examples/sheet_beta.csv
 <h2>
 <a name="tests" class="anchor" href="#tests"><span class="octicon octicon-link"></span></a>Tests</h2>
 
-<p>To run the tests, you must install <a href="https://github.com/hroptatyr/xls2txt">xls2txt</a>:</p>
+<p>To run the tests, you must install
+<a href="https://github.com/hroptatyr/xls2txt">xls2txt</a>:</p>
 
 <div class="highlight highlight-bash"><pre><span class="nv">$ </span>git clone https://github.com/hroptatyr/xls2txt.git
 <span class="nv">$ </span><span class="nb">cd </span>xls2txt
