@@ -42,10 +42,9 @@ Usage
 .. code-block:: bash
 
  $ csv2xls -h
- usage: csv2xls [-h] [-o OUTPUT] [-k] [-f] [-c] [-d DATE_FORMAT]
-                files [files ...]
+ usage: csv2xls [-h] [-o OUTPUT] [-k] [-c] [-no] [-d FORMAT] files [files ...]
 
- Put together some CSV files into a single Excel file. Basic types are infered
+ Put together some CSV files into a single Excel file. Basic types are inferred
  automatically.
 
  positional arguments:
@@ -56,11 +55,13 @@ Usage
    -o OUTPUT, --output OUTPUT
                          Define name for output Excel file. Default is
                          output.xls.
-   -k, --keep-prefix     Keep common prefix when building sheet names.
-   -f, --force           If output already exists, override it.
-   -c, --clean           Delete input files after successfully creating the
-                         Excel file.
-   -d DATE_FORMAT, --date-format DATE_FORMAT
+   -k, --keep-prefix     Keep common prefix when building sheet names. Default
+                         is to remove the common prefix of input file names.
+   -c, --clean           Delete input files afterwards, if successful.
+   -no, --no-type-inference
+                         Do not try to infer int/float/date when writing. This
+                         mode is faster and preserves input data.
+   -d FORMAT, --date-format FORMAT
                          Change date format used during date type inference.
                          Default is %Y-%m-%d.
 
