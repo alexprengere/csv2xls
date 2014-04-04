@@ -16,20 +16,26 @@ import xlwt
 
 DEF_DATE_FORMAT = "%Y-%m-%d"
 
+# Sheet names limitations
+FORBIDDEN = set([':', '/', '?'])
+MAX_SIZE = 28
+
+# Rows are limited in Excel
+MAX_ROWS = 65535
+
 
 def sanitize(name):
     """xlwt does not allow long sheet names.
     """
-    for c in '/', '?':
+    for c in FORBIDDEN:
         # For '/', we do not print
         if c in name and c != '/':
             print("! Sheet names cannot contain '{0}', replacing in {1}".format(c, name))
         name = name.replace(c, '_')
 
-    limit = 28
-    if len(name) > limit:
-        print("! Sheet name too long. Trimming {0} to {1}".format(name, name[:limit]))
-    return name[:limit]
+    if len(name) > MAX_SIZE:
+        print("! Sheet name too long. Trimming {0} to {1}".format(name, name[:MAX_SIZE]))
+    return name[:MAX_SIZE]
 
 
 def build_sheet_names(files, keep_prefix):
