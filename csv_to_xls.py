@@ -159,7 +159,7 @@ def add_to_sheet(sheet, fl, date_format, inference):
         print("! Exceeding max rows {0}, dropping remaining {1} rows...".format(MAX_ROWS, nb_dropped))
 
 
-def create_xls_file(files, output, date_format=DEF_DATE_FORMAT, inference=True, keep_prefix=False, force=False, clean=False):
+def create_xls_file(files, output, date_format=DEF_DATE_FORMAT, inference=True, keep_prefix=False, clean=False):
     """Main function creating the xls file.
     """
     if not output.endswith(".xls") and not output.endswith(".xlsx"):
@@ -167,9 +167,9 @@ def create_xls_file(files, output, date_format=DEF_DATE_FORMAT, inference=True, 
         print("{0:^40}".format(output))
         return
 
-    if op.exists(output) and not force:
-        print("! Output already exists: {0}".format(output))
-        return
+    if op.exists(output):
+        print("! Output {0} already exists, removing.".format(output))
+        os.unlink(output)
 
     # THE Excel book ;)
     book = xlwt.Workbook()
@@ -188,7 +188,7 @@ def create_xls_file(files, output, date_format=DEF_DATE_FORMAT, inference=True, 
     # Hopefully no exception raised so far
     if clean:
         for f in sorted(files):
-            print("Removing {0}".format(f))
+            print("Removing {0}.".format(f))
             os.unlink(f)
 
 
@@ -214,12 +214,6 @@ def main():
         help="""
         Keep common prefix when
         building sheet names.
-        """,
-        action='store_true')
-
-    parser.add_argument("-f", "--force",
-        help="""
-        If output already exists, override it.
         """,
         action='store_true')
 
@@ -255,7 +249,6 @@ def main():
         'date_format' : args.date_format,
         'inference'   : not args.no_type_inference,
         'keep_prefix' : args.keep_prefix,
-        'force'       : args.force,
         'clean'       : args.clean,
     })
 
