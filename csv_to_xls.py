@@ -6,7 +6,8 @@ Put together some CSV files into a single Excel file, in different sheets.
 
 from __future__ import with_statement
 
-import os, sys
+import os
+import sys
 import os.path as op
 from datetime import datetime
 from collections import defaultdict
@@ -122,6 +123,7 @@ def is_date(s, date_format):
 DATE_FORMAT_STYLE = xlwt.XFStyle()
 DATE_FORMAT_STYLE.num_format_str = 'M/D/YY'
 
+
 def infer_and_write(sheet, row_nb, col_nb, v, date_format):
     """Custom sheet writer with type inference.
     """
@@ -165,7 +167,8 @@ def add_to_sheet(sheet, fl, date_format, inference):
         print("! Exceeding max rows {0}, dropping remaining {1} rows...".format(MAX_ROWS, nb_dropped))
 
 
-def create_xls_file(files, output, date_format=DEF_DATE_FORMAT, inference=True, keep_prefix=False, clean=False):
+def create_xls_file(files, output, date_format=DEF_DATE_FORMAT,
+                    inference=True, keep_prefix=False, clean=False):
     """Main function creating the xls file.
     """
     if not output.endswith(".xls") and not output.endswith(".xlsx"):
@@ -211,38 +214,38 @@ def main():
     parser.add_argument("files", nargs='+')
 
     parser.add_argument("-o", "--output",
-        help="""
-        Define name for output Excel file.
-        Default is %(default)s.""",
-        default="output.xls")
+                        help="""
+                        Define name for output Excel file.
+                        Default is %(default)s.""",
+                        default="output.xls")
 
     parser.add_argument("-k", "--keep-prefix",
-        help="""
-        Keep common prefix when building sheet names.
-        Default is to remove the common prefix of input file names.
-        """,
-        action='store_true')
+                        help="""
+                        Keep common prefix when building sheet names.
+                        Default is to remove the common
+                        prefix of input file names.""",
+                        action='store_true')
 
     parser.add_argument("-c", "--clean",
-        help="""
-        Delete input files afterwards, if successful.
-        """,
-        action='store_true')
+                        help="""
+                        Delete input files afterwards, if successful.
+                        """,
+                        action='store_true')
 
     parser.add_argument("-no", "--no-type-inference",
-        help="""
-        Do not try to infer int/float/date when writing.
-        This mode is faster and preserves input data.
-        """,
-        action='store_true')
+                        help="""
+                        Do not try to infer int/float/date when writing.
+                        This mode is faster and preserves input data.
+                        """,
+                        action='store_true')
 
     parser.add_argument("-d", "--date-format",
-        help="""
-        Change date format used during date type
-        inference. Default is %(default)s.
-        """,
-        default=DEF_DATE_FORMAT,
-        metavar="FORMAT")
+                        help="""
+                        Change date format used during date type
+                        inference. Default is %(default)s.
+                        """,
+                        default=DEF_DATE_FORMAT,
+                        metavar="FORMAT")
 
     parser.epilog = """
     Example: {0} examples/sheet_alpha.csv examples/sheet_beta.csv
@@ -251,16 +254,15 @@ def main():
     args = parser.parse_args()
 
     create_xls_file(**{
-        'files'       : args.files,
-        'output'      : args.output,
-        'date_format' : args.date_format,
-        'inference'   : not args.no_type_inference,
-        'keep_prefix' : args.keep_prefix,
-        'clean'       : args.clean,
+        'files': args.files,
+        'output': args.output,
+        'date_format': args.date_format,
+        'inference': not args.no_type_inference,
+        'keep_prefix': args.keep_prefix,
+        'clean': args.clean,
     })
 
 
 if __name__ == "__main__":
 
     main()
-
