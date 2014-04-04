@@ -43,13 +43,16 @@ def build_sheet_names(files, keep_prefix):
 
     We trim the common prefix, remove the extension.
     """
+    if not files:
+        raise ValueError("No files provided.")
+
     if keep_prefix:
         prefix = ''
     else:
-        if len(files) > 1:
-            prefix = op.commonprefix(files)
-        else:
-            # If only one sheet, we do not remove the whole name!
+        prefix = op.commonprefix(files)
+
+        if prefix == files[0]:
+            # Can happen if only one repeated sheet
             prefix = ''
 
     # Helper lambdas
