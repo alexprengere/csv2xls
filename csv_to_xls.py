@@ -40,7 +40,11 @@ def build_sheet_names(files, keep_prefix):
     if keep_prefix:
         prefix = ''
     else:
-        prefix = op.commonprefix(files)
+        if len(files) > 1:
+            prefix = op.commonprefix(files)
+        else:
+            # If only one sheet, we do not remove the whole name!
+            prefix = ''
 
     # Helper lambdas
     trim_prefix = lambda s: s[len(prefix):]
