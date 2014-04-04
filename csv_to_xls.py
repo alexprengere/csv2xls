@@ -116,7 +116,7 @@ def is_date(s, date_format):
 DATE_FORMAT_STYLE = xlwt.XFStyle()
 DATE_FORMAT_STYLE.num_format_str = 'M/D/YY'
 
-def write_to_sheet(sheet, row_nb, col_nb, v, date_format):
+def infer_and_write(sheet, row_nb, col_nb, v, date_format):
     """Custom sheet writer with type inference.
     """
     if is_int(v):
@@ -133,9 +133,14 @@ def write_to_sheet(sheet, row_nb, col_nb, v, date_format):
         sheet.write(row_nb, col_nb, v)
 
 
-def add_to_sheet(sheet, fl, date_format):
+def add_to_sheet(sheet, fl, date_format, inference):
     """Add filelike content to sheet.
     """
+    if inference:
+        write = infer_and_write
+    else:
+        write = lambda s, r, c, v, _: s.write(r, c, v)
+
     broke = False
 
     for row_nb, row in enumerate(csv.reader(fl, delimiter=',', quotechar='"')):
@@ -146,7 +151,7 @@ def add_to_sheet(sheet, fl, date_format):
 
         for col_nb, v in enumerate(row):
             # Type inference hidden here
-            write_to_sheet(sheet, row_nb, col_nb, v, date_format)
+            write(sheet, row_nb, col_nb, v, date_format)
 
     if broke:
         # We add one because we lost 1 when breaking
@@ -154,7 +159,7 @@ def add_to_sheet(sheet, fl, date_format):
         print("! Exceeding max rows {0}, dropping remaining {1} rows...".format(MAX_ROWS, nb_dropped))
 
 
-def create_xls_file(files, output, keep_prefix=False, force=False, date_format=DEF_DATE_FORMAT, clean=False):
+def create_xls_file(files, output, date_format=DEF_DATE_FORMAT, inference=True, keep_prefix=False, force=False, clean=False):
     """Main function creating the xls file.
     """
     if not output.endswith(".xls") and not output.endswith(".xlsx"):
@@ -176,7 +181,7 @@ def create_xls_file(files, output, keep_prefix=False, force=False, date_format=D
 
         with open(f) as fl:
             sheet = book.add_sheet(sheet_name)
-            add_to_sheet(sheet, fl, date_format)
+            add_to_sheet(sheet, fl, date_format, inference)
 
     book.save(output)
 
@@ -224,6 +229,13 @@ def main():
         """,
         action='store_true')
 
+    parser.add_argument("-no", "--no-type-inference",
+        help="""
+        Do not try to detect int/float/date when write
+        in the sheet. Will be faster that way.
+        """,
+        action='store_true')
+
     parser.add_argument("-d", "--date-format",
         help="""
         Change date format used during date type
@@ -237,12 +249,15 @@ def main():
 
     args = parser.parse_args()
 
-    create_xls_file(args.files,
-                    args.output,
-                    args.keep_prefix,
-                    args.force,
-                    args.date_format,
-                    args.clean)
+    create_xls_file(**{
+        'files'       : args.files,
+        'output'      : args.output,
+        'date_format' : args.date_format,
+        'inference'   : not args.no_type_inference,
+        'keep_prefix' : args.keep_prefix,
+        'force'       : args.force,
+        'clean'       : args.clean,
+    })
 
 
 if __name__ == "__main__":
