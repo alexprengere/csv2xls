@@ -133,11 +133,22 @@ def write_to_sheet(sheet, row_nb, col_nb, v, date_format):
 def add_to_sheet(sheet, fl, date_format):
     """Add filelike content to sheet.
     """
+    broke = False
+
     for row_nb, row in enumerate(csv.reader(fl, delimiter=',', quotechar='"')):
+
+        if row_nb > MAX_ROWS:
+            broke = True
+            break
 
         for col_nb, v in enumerate(row):
             # Type inference hidden here
             write_to_sheet(sheet, row_nb, col_nb, v, date_format)
+
+    if broke:
+        # We add one because we lost 1 when breaking
+        nb_dropped = 1 + len(list(fl))
+        print("! Exceeding max rows {0}, dropping remaining {1} rows...".format(MAX_ROWS, nb_dropped))
 
 
 def create_xls_file(files, output, keep_prefix=False, force=False, date_format=DEF_DATE_FORMAT, clean=False):
