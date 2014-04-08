@@ -42,7 +42,9 @@ Usage
 .. code-block:: bash
 
  $ csv2xls -h
- usage: csv2xls [-h] [-o OUTPUT] [-k] [-c] [-n] [-d FORMAT] files [files ...]
+ usage: csv2xls [-h] [-o OUTPUT] [-c] [-d DELIMITER] [-q QUOTECHAR] [-n]
+                [-D FORMAT] [-k]
+                files [files ...]
 
  Put together some CSV files into a single Excel file. Basic types are inferred
  automatically.
@@ -54,16 +56,20 @@ Usage
    -h, --help            show this help message and exit
    -o OUTPUT, --output OUTPUT
                          Define name for output Excel file. Default is
-                         output.xls.
-   -k, --keep-prefix     Keep common prefix when building sheet names. Default
-                         is to remove the common prefix of input file names.
+                         "output.xls".
    -c, --clean           Delete input files afterwards, if successful.
+   -d DELIMITER, --delimiter DELIMITER
+                         Change row delimiter. Default is ",".
+   -q QUOTECHAR, --quotechar QUOTECHAR
+                         Change quoting character. Default is ".
    -n, --no-type-inference
                          Do not try to infer int/float/date when writing. This
                          mode is faster and preserves input data.
-   -d FORMAT, --date-format FORMAT
+   -D FORMAT, --date-format FORMAT
                          Change date format used during date type inference.
-                         Default is %Y-%m-%d.
+                         Default is "%Y-%m-%d".
+   -k, --keep-prefix     Keep common prefix when building sheet names. Default
+                         is to remove the common prefix of input file names.
 
  Example: csv2xls examples/sheet_alpha.csv examples/sheet_beta.csv
 
