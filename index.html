@@ -69,7 +69,7 @@ Processing        examples/sheet_beta.csv -&gt; output.xls/beta
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
 <div class="highlight highlight-bash"><pre><span class="nv">$ </span>csv2xls -h
-usage: csv2xls <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>-o OUTPUT<span class="o">]</span> <span class="o">[</span>-k<span class="o">]</span> <span class="o">[</span>-c<span class="o">]</span> <span class="o">[</span>-no<span class="o">]</span> <span class="o">[</span>-d FORMAT<span class="o">]</span> files <span class="o">[</span>files ...<span class="o">]</span>
+usage: csv2xls <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>-o OUTPUT<span class="o">]</span> <span class="o">[</span>-k<span class="o">]</span> <span class="o">[</span>-c<span class="o">]</span> <span class="o">[</span>-n<span class="o">]</span> <span class="o">[</span>-d FORMAT<span class="o">]</span> files <span class="o">[</span>files ...<span class="o">]</span>
 
 Put together some CSV files into a single Excel file. Basic types are inferred
 automatically.
@@ -85,7 +85,7 @@ optional arguments:
   -k, --keep-prefix     Keep common prefix when building sheet names. Default
                         is to remove the common prefix of input file names.
   -c, --clean           Delete input files afterwards, <span class="k">if </span>successful.
-  -no, --no-type-inference
+  -n, --no-type-inference
                         Do not try to infer int/float/date when writing. This
                         mode is faster and preserves input data.
   -d FORMAT, --date-format FORMAT
