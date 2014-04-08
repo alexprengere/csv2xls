@@ -42,7 +42,7 @@ Usage
 .. code-block:: bash
 
  $ csv2xls -h
- usage: csv2xls [-h] [-o OUTPUT] [-k] [-c] [-no] [-d FORMAT] files [files ...]
+ usage: csv2xls [-h] [-o OUTPUT] [-k] [-c] [-n] [-d FORMAT] files [files ...]
 
  Put together some CSV files into a single Excel file. Basic types are inferred
  automatically.
@@ -58,7 +58,7 @@ Usage
    -k, --keep-prefix     Keep common prefix when building sheet names. Default
                          is to remove the common prefix of input file names.
    -c, --clean           Delete input files afterwards, if successful.
-   -no, --no-type-inference
+   -n, --no-type-inference
                          Do not try to infer int/float/date when writing. This
                          mode is faster and preserves input data.
    -d FORMAT, --date-format FORMAT

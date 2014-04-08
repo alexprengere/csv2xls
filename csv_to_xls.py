@@ -229,7 +229,7 @@ def main():
         """,
         action='store_true')
 
-    parser.add_argument("-no", "--no-type-inference",
+    parser.add_argument("-n", "--no-type-inference",
         help="""
         Do not try to infer int/float/date when writing.
         This mode is faster and preserves input data.
