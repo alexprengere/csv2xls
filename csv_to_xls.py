@@ -15,6 +15,8 @@ import csv
 import xlwt
 
 DEF_DATE_FORMAT = "%Y-%m-%d"
+DEF_DELIMITER = ','
+DEF_QUOTECHAR = '"'
 
 # Sheet names limitations
 FORBIDDEN = set([':', '/', '?'])
@@ -139,7 +141,7 @@ def infer_and_write(sheet, row_nb, col_nb, v, date_format):
         sheet.write(row_nb, col_nb, v)
 
 
-def add_to_sheet(sheet, fl, date_format, inference):
+def add_to_sheet(sheet, rows, date_format, inference):
     """Add filelike content to sheet.
     """
     if inference:
@@ -147,9 +149,10 @@ def add_to_sheet(sheet, fl, date_format, inference):
     else:
         write = lambda s, r, c, v, _: s.write(r, c, v)
 
+    # Will we exceed MAX_ROWS?
     broke = False
 
-    for row_nb, row in enumerate(csv.reader(fl, delimiter=',', quotechar='"')):
+    for row_nb, row in enumerate(rows):
 
         if row_nb > MAX_ROWS:
             broke = True
@@ -161,11 +164,18 @@ def add_to_sheet(sheet, fl, date_format, inference):
 
     if broke:
         # We add one because we lost 1 when breaking
-        nb_dropped = 1 + len(list(fl))
+        nb_dropped = 1 + len(list(rows))
         print("! Exceeding max rows {0}, dropping remaining {1} rows...".format(MAX_ROWS, nb_dropped))
 
 
-def create_xls_file(files, output, date_format=DEF_DATE_FORMAT, inference=True, keep_prefix=False, clean=False):
+def create_xls_file(files,
+                    output,
+                    clean=False,
+                    delimiter=DEF_DELIMITER,
+                    quotechar=DEF_QUOTECHAR,
+                    inference=True,
+                    date_format=DEF_DATE_FORMAT,
+                    keep_prefix=False):
     """Main function creating the xls file.
     """
     if not output.endswith(".xls") and not output.endswith(".xlsx"):
@@ -186,8 +196,11 @@ def create_xls_file(files, output, date_format=DEF_DATE_FORMAT, inference=True, 
         print("Processing {0:>30} -> {1}/{2}".format(f, output, sheet_name))
 
         with open(f) as fl:
+            # This is an interator on the rows, quoted and splitted
+            rows = csv.reader(fl, delimiter=delimiter, quotechar=quotechar)
+
             sheet = book.add_sheet(sheet_name)
-            add_to_sheet(sheet, fl, date_format, inference)
+            add_to_sheet(sheet, rows, date_format, inference)
 
     book.save(output)
 
@@ -253,10 +266,12 @@ def main():
     create_xls_file(**{
         'files'       : args.files,
         'output'      : args.output,
-        'date_format' : args.date_format,
-        'inference'   : not args.no_type_inference,
-        'keep_prefix' : args.keep_prefix,
         'clean'       : args.clean,
+        'delimiter'   : DEF_DELIMITER,
+        'quotechar'   : DEF_QUOTECHAR,
+        'inference'   : not args.no_type_inference,
+        'date_format' : args.date_format,
+        'keep_prefix' : args.keep_prefix,
     })
 
 
