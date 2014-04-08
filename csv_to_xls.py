@@ -243,7 +243,8 @@ def main():
 
     parser.add_argument("-q", "--quotechar",
         help="""
-        Change quoting character. Default is %(default)s.
+        Change quoting character.
+        Default way of quoting is %(default)sthat is, quoted%(default)s.
         """,
         default=DEF_QUOTECHAR)
 

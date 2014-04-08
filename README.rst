@@ -61,7 +61,8 @@ Usage
    -d DELIMITER, --delimiter DELIMITER
                          Change row delimiter. Default is ",".
    -q QUOTECHAR, --quotechar QUOTECHAR
-                         Change quoting character. Default is ".
+                         Change quoting character. Default way of quoting is
+                         "that is, quoted".
    -n, --no-type-inference
                          Do not try to infer int/float/date when writing. This
                          mode is faster and preserves input data.
