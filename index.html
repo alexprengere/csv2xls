@@ -88,13 +88,14 @@ optional arguments:
   -d DELIMITER, --delimiter DELIMITER
                         Change row delimiter. Default is <span class="s2">","</span>.
   -q QUOTECHAR, --quotechar QUOTECHAR
-                        Change quoting character. Default is <span class="s2">".</span>
-<span class="s2">  -n, --no-type-inference</span>
-<span class="s2">                        Do not try to infer int/float/date when writing. This</span>
-<span class="s2">                        mode is faster and preserves input data.</span>
-<span class="s2">  -D FORMAT, --date-format FORMAT</span>
-<span class="s2">                        Change date format used during date type inference.</span>
-<span class="s2">                        Default is "</span>%Y-%m-%d<span class="err">"</span>.
+                        Change quoting character. Default way of quoting is
+                        <span class="s2">"that is, quoted"</span>.
+  -n, --no-type-inference
+                        Do not try to infer int/float/date when writing. This
+                        mode is faster and preserves input data.
+  -D FORMAT, --date-format FORMAT
+                        Change date format used during date <span class="nb">type </span>inference.
+                        Default is <span class="s2">"%Y-%m-%d"</span>.
   -k, --keep-prefix     Keep common prefix when building sheet names. Default
                         is to remove the common prefix of input file names.
 
