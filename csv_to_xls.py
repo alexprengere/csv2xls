@@ -226,7 +226,7 @@ def main():
     parser.add_argument("-o", "--output",
         help="""
         Define name for output Excel file.
-        Default is %(default)s.""",
+        Default is "%(default)s".""",
         default="output.xls")
 
     parser.add_argument("-c", "--clean",
@@ -242,10 +242,10 @@ def main():
         """,
         action='store_true')
 
-    parser.add_argument("-d", "--date-format",
+    parser.add_argument("-D", "--date-format",
         help="""
         Change date format used during date type
-        inference. Default is %(default)s.
+        inference. Default is "%(default)s".
         """,
         default=DEF_DATE_FORMAT,
         metavar="FORMAT")
