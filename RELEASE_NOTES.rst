@@ -5,6 +5,12 @@ Release notes
 V0
 ==
 
++ 0.4 :
+
+    + Add possibility to configure delimiter and quotechar with ``-d`` and ``-q``
+    + ``-d`` is now ``-D`` to configure date format for type inference
+    + fix bug in option name
+
 + 0.3 :
 
     + Allow multiple same sheet in input
