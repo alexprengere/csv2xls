@@ -216,13 +216,6 @@ def main():
         Default is %(default)s.""",
         default="output.xls")
 
-    parser.add_argument("-k", "--keep-prefix",
-        help="""
-        Keep common prefix when building sheet names.
-        Default is to remove the common prefix of input file names.
-        """,
-        action='store_true')
-
     parser.add_argument("-c", "--clean",
         help="""
         Delete input files afterwards, if successful.
@@ -243,6 +236,13 @@ def main():
         """,
         default=DEF_DATE_FORMAT,
         metavar="FORMAT")
+
+    parser.add_argument("-k", "--keep-prefix",
+        help="""
+        Keep common prefix when building sheet names.
+        Default is to remove the common prefix of input file names.
+        """,
+        action='store_true')
 
     parser.epilog = """
     Example: {0} examples/sheet_alpha.csv examples/sheet_beta.csv
