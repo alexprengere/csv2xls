@@ -235,6 +235,18 @@ def main():
         """,
         action='store_true')
 
+    parser.add_argument("-d", "--delimiter",
+        help="""
+        Change row delimiter. Default is "%(default)s".
+        """,
+        default=DEF_DELIMITER)
+
+    parser.add_argument("-q", "--quotechar",
+        help="""
+        Change quoting character. Default is %(default)s.
+        """,
+        default=DEF_QUOTECHAR)
+
     parser.add_argument("-n", "--no-type-inference",
         help="""
         Do not try to infer int/float/date when writing.
@@ -267,8 +279,8 @@ def main():
         'files'       : args.files,
         'output'      : args.output,
         'clean'       : args.clean,
-        'delimiter'   : DEF_DELIMITER,
-        'quotechar'   : DEF_QUOTECHAR,
+        'delimiter'   : args.delimiter,
+        'quotechar'   : args.quotechar,
         'inference'   : not args.no_type_inference,
         'date_format' : args.date_format,
         'keep_prefix' : args.keep_prefix,
