@@ -7,6 +7,7 @@ V0
 
 + 0.4 :
 
+    + PEP8 compliance by @lowks
     + Add possibility to configure delimiter and quotechar with ``-d`` and ``-q``
     + ``-d`` is now ``-D`` to configure date format for type inference
     + fix bug in option name
