@@ -20,6 +20,7 @@ Or use the Python package:
 
 Dependency
 ----------
+
 Outside the standard library, the `xlwt <http://www.python-excel.org/>`_ package is needed, and should be
 automatically installed with setuptools. Otherwise:
 
@@ -76,6 +77,7 @@ Usage
 
 Tests
 -----
+
 To run the tests, you must install `xls2txt <https://github.com/hroptatyr/xls2txt>`_:
 
 .. code-block:: bash
