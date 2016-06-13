@@ -58,9 +58,12 @@ def build_sheet_names(files, keep_prefix):
             # Can happen if only one repeated sheet
             prefix = ''
 
-    # Helper lambdas
-    trim_prefix = lambda s: s[len(prefix):]
-    trim_extens = lambda s: op.splitext(s)[0]
+    # Helpers
+    def trim_prefix(s):
+        return s[len(prefix):]
+
+    def trim_extens(s):
+        return op.splitext(s)[0]
 
     # Remove prefix, extension
     sheet_names = []
@@ -149,7 +152,8 @@ def add_to_sheet(sheet, rows, date_format, inference):
     if inference:
         write = infer_and_write
     else:
-        write = lambda s, r, c, v, _: s.write(r, c, v)
+        def write(s, r, c, v, _):
+            return s.write(r, c, v)
 
     # Will we exceed MAX_ROWS?
     broke = False
@@ -167,7 +171,7 @@ def add_to_sheet(sheet, rows, date_format, inference):
     if broke:
         # We add one because we lost 1 when breaking
         nb_dropped = 1 + len(list(rows))
-        print("! Exceeding max rows {0}, dropping remaining {1} rows...".format(MAX_ROWS, nb_dropped))
+        print("! Exceeding max rows {0}, dropping remaining {1} rows".format(MAX_ROWS, nb_dropped))
 
 
 def create_xls_file(files,
