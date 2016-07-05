@@ -3,22 +3,17 @@
 
 from __future__ import with_statement
 
-import os.path as op
 from setuptools import setup
 
 
-def local(rel_path, root_file=__file__):
-    return op.join(op.realpath(op.dirname(root_file)), rel_path)
+with open('VERSION') as f:
+    VERSION = f.read().rstrip()
 
+with open('README.rst') as f:
+    LONG_DESCRIPTION = f.read()
 
-with open(local('VERSION')) as fl:
-    VERSION = fl.read().rstrip()
-
-with open(local('README.rst')) as fl:
-    LONG_DESCRIPTION = fl.read()
-
-with open(local('LICENSE')) as fl:
-    LICENSE = fl.read()
+with open('LICENSE') as f:
+    LICENSE = f.read()
 
 setup(
     name='csv2xls',
